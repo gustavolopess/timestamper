@@ -26,7 +26,10 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/timestamp/:date_string?", (req, res) => {
   try {
-    const dt = new Date(req.params.date_string)
+    let dt = new Date()
+    if (req.params.date_string && req.params.date_string.length > 0) {
+      dt = new Date(req.params.date_string)
+    }
     res.json({unix: dt.getTime(), utc: dt.toUTCString()})
   } catch (e) {
     res.json({unix: null, utc: "Invalid Date"})
